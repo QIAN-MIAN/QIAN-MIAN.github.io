@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  <entry>
+    <title>Hello World</title>
+    <url>/2023/03/19/hello-world/</url>
+    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+]]></content>
+  </entry>
+  <entry>
+    <title>test_my_site</title>
+    <url>/2023/03/19/test-my-site/</url>
+    <content><![CDATA[]]></content>
+  </entry>
+  <entry>
+    <title>tree</title>
+    <url>/2023/03/20/tree/</url>
+    <content><![CDATA[<h2 id="1-获取目录结构"><a href="#1-获取目录结构" class="headerlink" title="1. 获取目录结构"></a>1. 获取目录结构</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">tree</span><br></pre></td></tr></table></figure>
+
+
+
+<p>在当前要操作的文件夹目录下输入命令tree，此时得到目录下树形的目录结构。默认情况下只显示“文件夹”而不显示文件。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/QIAN-MIAN/Typora_image/Typora_img/202303121610991.png" alt="img"></p>
+<h2 id="2-获取目录结构并显示所有文件夹和文件名称"><a href="#2-获取目录结构并显示所有文件夹和文件名称" class="headerlink" title="2.获取目录结构并显示所有文件夹和文件名称"></a>2.获取目录结构并显示所有文件夹和文件名称</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">tree /f</span><br></pre></td></tr></table></figure>
+
+
+
+<p>在tree命令后面加入参数 &#x2F;f 将以层次的结构显示所有文件夹及文件的名称。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/QIAN-MIAN/Typora_image/Typora_img/202303121610993.png" alt="img"></p>
+<h2 id="3-保存获取的目录结构树到文本文档"><a href="#3-保存获取的目录结构树到文本文档" class="headerlink" title="3.保存获取的目录结构树到文本文档"></a>3.保存获取的目录结构树到文本文档</h2><p>在上述使用命令[1. 获取目录结构](# 1. 获取目录结构)或[2.获取目录结构并显示所有文件夹和文件名称](# 2.获取目录结构并显示所有文件夹和文件名称)的后面添加“空格”，再添加 <code>&gt;</code> 及文本文档的名称，系统就会将上述显示的内容存入指定的文档中（如果输入了指定路径那么文档存入之规定路径，如果未指定路径，文本文档就存在当前所在文件夹目录下）。</p>
+<p>如下图所示，执行后不会显示任何内容，但命令执行的结果保存在文本文档中。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">tree &gt;目录结构_1.txt</span><br></pre></td></tr></table></figure>
+
+
+
+<p><img src="https://cdn.jsdelivr.net/gh/QIAN-MIAN/Typora_image/Typora_img/202303121610994.png" alt="img"></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">tree /f &gt;目录结构_2.md</span><br><span class="line"></span><br><span class="line">tree /f &gt;目录结构_2.xls</span><br></pre></td></tr></table></figure>
+
+
+
+<p><img src="https://cdn.jsdelivr.net/gh/QIAN-MIAN/Typora_image/Typora_img/202303121610995.png" alt="img"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/QIAN-MIAN/Typora_image/Typora_img/202303121610996.png" alt="img"></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">保存在指定位置</span><br><span class="line">tree /f &gt;F:\Java_how2j\1_HelloWorld\1_命令行HelloWorld\src\目录结构_3.csv</span><br></pre></td></tr></table></figure>
+
+
+
+<p><img src="https://cdn.jsdelivr.net/gh/QIAN-MIAN/Typora_image/Typora_img/202303121610997.png" alt="img"></p>
+]]></content>
+  </entry>
+</search>
