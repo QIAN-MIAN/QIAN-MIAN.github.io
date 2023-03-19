@@ -6,7 +6,7 @@
 <meta name="theme-color" content="#222">
 <meta name="generator" content="Hexo 6.3.0">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
   <link rel="mask-icon" href="/images/logo.svg" color="#222">
 
@@ -14,6 +14,8 @@
 
 
 <link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-center-atom.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
@@ -74,7 +76,7 @@
   </style>
 </noscript>
 
-</head>
+<!-- hexo injector head_end start --><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Zfour/Butterfly-card-history/baiduhistory/css/main.css"><!-- hexo injector head_end end --></head>
 
 <body itemscope itemtype="http://schema.org/WebPage">
   <div class="container use-motion">
@@ -212,7 +214,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2023-03-20 00:31:46 / 修改时间：00:33:59" itemprop="dateCreated datePublished" datetime="2023-03-20T00:31:46+08:00">2023-03-20</time>
+              <time title="创建时间：2023-03-20 00:31:46 / 修改时间：01:03:03" itemprop="dateCreated datePublished" datetime="2023-03-20T00:31:46+08:00">2023-03-20</time>
             </span>
 
           
@@ -220,7 +222,7 @@
               <span class="post-meta-item-icon">
                 <i class="far fa-file-word"></i>
               </span>
-              <span>333</span>
+              <span>334</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -243,32 +245,14 @@
 
 
 <p>在当前要操作的文件夹目录下输入命令tree，此时得到目录下树形的目录结构。默认情况下只显示“文件夹”而不显示文件。</p>
-<p><img src="https://cdn.jsdelivr.net/gh/QIAN-MIAN/Typora_image/Typora_img/202303121610991.png" alt="img"></p>
-<h2 id="2-获取目录结构并显示所有文件夹和文件名称"><a href="#2-获取目录结构并显示所有文件夹和文件名称" class="headerlink" title="2.获取目录结构并显示所有文件夹和文件名称"></a>2.获取目录结构并显示所有文件夹和文件名称</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tree /f</span><br></pre></td></tr></table></figure>
-
-
-
-<p>在tree命令后面加入参数 &#x2F;f 将以层次的结构显示所有文件夹及文件的名称。</p>
-<p><img src="https://cdn.jsdelivr.net/gh/QIAN-MIAN/Typora_image/Typora_img/202303121610993.png" alt="img"></p>
-<h2 id="3-保存获取的目录结构树到文本文档"><a href="#3-保存获取的目录结构树到文本文档" class="headerlink" title="3.保存获取的目录结构树到文本文档"></a>3.保存获取的目录结构树到文本文档</h2><p>在上述使用命令[1. 获取目录结构](# 1. 获取目录结构)或[2.获取目录结构并显示所有文件夹和文件名称](# 2.获取目录结构并显示所有文件夹和文件名称)的后面添加“空格”，再添加 <code>&gt;</code> 及文本文档的名称，系统就会将上述显示的内容存入指定的文档中（如果输入了指定路径那么文档存入之规定路径，如果未指定路径，文本文档就存在当前所在文件夹目录下）。</p>
-<p>如下图所示，执行后不会显示任何内容，但命令执行的结果保存在文本文档中。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tree &gt;目录结构_1.txt</span><br></pre></td></tr></table></figure>
-
-
-
-<p><img src="https://cdn.jsdelivr.net/gh/QIAN-MIAN/Typora_image/Typora_img/202303121610994.png" alt="img"></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">tree /f &gt;目录结构_2.md</span><br><span class="line"></span><br><span class="line">tree /f &gt;目录结构_2.xls</span><br></pre></td></tr></table></figure>
-
-
-
-<p><img src="https://cdn.jsdelivr.net/gh/QIAN-MIAN/Typora_image/Typora_img/202303121610995.png" alt="img"></p>
-<p><img src="https://cdn.jsdelivr.net/gh/QIAN-MIAN/Typora_image/Typora_img/202303121610996.png" alt="img"></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">保存在指定位置</span><br><span class="line">tree /f &gt;F:\Java_how2j\1_HelloWorld\1_命令行HelloWorld\src\目录结构_3.csv</span><br></pre></td></tr></table></figure>
-
-
-
-<p><img src="https://cdn.jsdelivr.net/gh/QIAN-MIAN/Typora_image/Typora_img/202303121610997.png" alt="img"></p>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2023/03/20/tree/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -319,13 +303,13 @@
               <span class="post-meta-item-icon">
                 <i class="far fa-file-word"></i>
               </span>
-              <span></span>
+              <span>0</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
-              <span>NaN:aN</span>
+              <span>1 分钟</span>
             </span>
 
         </div>
@@ -388,13 +372,13 @@
               <span class="post-meta-item-icon">
                 <i class="far fa-file-word"></i>
               </span>
-              <span></span>
+              <span>78</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
-              <span>NaN:aN</span>
+              <span>1 分钟</span>
             </span>
 
         </div>
@@ -543,12 +527,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">NaNm</span>
+    <span title="站点总字数">0k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">NaN:aN</span>
+    <span title="站点阅读时长">1 分钟</span>
 </div>
 
         
@@ -606,5 +590,14 @@
 
   
 
-</body>
+<!-- hexo injector body_end start --><script data-pjax>function history_calendar_injector_config(){
+                var parent_div_git = document.getElementsByClassName('sticky_layout')[0];
+                var item_html = '<div class="card-widget card-history"><div class="card-content"><div class="item-headline"><i class="fas fa-clock fa-spin"></i><span>那年今日</span></div><div id="history-baidu" style="height: 100px;overflow: hidden"><div class="history_swiper-container" id="history-container" style="width: 100%;height: 100%"><div class="swiper-wrapper" id="history_container_wrapper" style="height:20px"></div></div></div></div>';
+                console.log('已挂载history_calendar')
+                // parent_div_git.innerHTML=item_html+parent_div_git.innerHTML // 无报错，但不影响使用(支持pjax跳转)
+                parent_div_git.insertAdjacentHTML("afterbegin",item_html) // 有报错，但不影响使用(支持pjax跳转)
+            }if( document.getElementsByClassName('sticky_layout')[0] && (location.pathname ==='all'|| 'all' ==='all')){
+
+            history_calendar_injector_config()
+        } </script><script data-pjax  src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script><script data-pjax src="https://cdn.jsdelivr.net/gh/Zfour/Butterfly-card-history/baiduhistory/js/main.js"></script><!-- hexo injector body_end end --></body>
 </html>
