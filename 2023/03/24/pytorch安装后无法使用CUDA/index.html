@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.0.0-rc1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-loading-bar.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":"ture","show_result":"ture","style":"mac"},"back2top":{"enable":true,"sidebar":"ture","scrollpercent":"ture"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":"ture","trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="可能是pytorch安装的是cpu版本，需要换成cuda版本">
+<meta property="og:type" content="article">
+<meta property="og:title" content="pytorch安装后无法使用CUDA">
+<meta property="og:url" content="http://example.com/2023/03/24/pytorch%E5%AE%89%E8%A3%85%E5%90%8E%E6%97%A0%E6%B3%95%E4%BD%BF%E7%94%A8CUDA/index.html">
+<meta property="og:site_name" content="夤夜入心">
+<meta property="og:description" content="可能是pytorch安装的是cpu版本，需要换成cuda版本">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/QIAN-MIAN/Typora_image/Typora_img/202303121654260.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/QIAN-MIAN/Typora_image/Typora_img/202303121654261.png">
+<meta property="article:published_time" content="2023-03-24T07:07:12.000Z">
+<meta property="article:modified_time" content="2023-03-24T07:07:34.572Z">
+<meta property="article:author" content="夤夜">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/QIAN-MIAN/Typora_image/Typora_img/202303121654260.png">
+
+<link rel="canonical" href="http://example.com/2023/03/24/pytorch%E5%AE%89%E8%A3%85%E5%90%8E%E6%97%A0%E6%B3%95%E4%BD%BF%E7%94%A8CUDA/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>pytorch安装后无法使用CUDA | 夤夜入心</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="夤夜入心" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">夤夜入心</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">道阻且长-行则将至</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/03/24/pytorch%E5%AE%89%E8%A3%85%E5%90%8E%E6%97%A0%E6%B3%95%E4%BD%BF%E7%94%A8CUDA/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://cdn.jsdelivr.net/gh/QIAN-MIAN/Typora_image/Typora_img/202303192347914.png">
+      <meta itemprop="name" content="夤夜">
+      <meta itemprop="description" content="孰能浊以静之徐清。孰能安以动之徐生。保此道者，不欲盈。夫唯不盈，故能蔽而新成。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="夤夜入心">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          pytorch安装后无法使用CUDA
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2023-03-24 15:07:12 / 修改时间：15:07:34" itemprop="dateCreated datePublished" datetime="2023-03-24T15:07:12+08:00">2023-03-24</time>
+            </span>
+
+          
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+              <span>425</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+              <span>2 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p><strong>可能是pytorch安装的是cpu版本，需要换成cuda版本</strong></p>
+<span id="more"></span>
+
+<h4 id="解决1"><a href="#解决1" class="headerlink" title="解决1"></a><a target="_blank" rel="noopener" href="http://t.csdn.cn/uutsU">解决1</a></h4><h4 id="解决2"><a href="#解决2" class="headerlink" title="解决2"></a><a target="_blank" rel="noopener" href="http://t.csdn.cn/nSOWH">解决2</a></h4><p>使用命令查看对应的版本</p>
+<p><strong>注意选择对应的conda环境下运行命令</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">activate 环境名</span><br><span class="line"></span><br><span class="line">#如果不指定环境名，则一般默认在base环境下（或者已经激活的环境下）</span><br><span class="line"></span><br><span class="line">conda list</span><br><span class="line">#查看Pytorch包对应的版本</span><br></pre></td></tr></table></figure>
+
+
+
+<p>以下为命令行内容——见第52行</p>
+<p><img src="https://cdn.jsdelivr.net/gh/QIAN-MIAN/Typora_image/Typora_img/202303121654260.png" alt="img"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/QIAN-MIAN/Typora_image/Typora_img/202303121654261.png" alt="img"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br></pre></td><td class="code"><pre><span class="line">C:\Users\24659&gt;activate first</span><br><span class="line"></span><br><span class="line">(first) C:\Users\24659&gt;python</span><br><span class="line">Python 3.10.9 | packaged by Anaconda, Inc. | (main, Mar  8 2023, 10:42:25) [MSC v.1916 64 bit (AMD64)] on win32</span><br><span class="line">Type &quot;help&quot;, &quot;copyright&quot;, &quot;credits&quot; or &quot;license&quot; for more information.</span><br><span class="line">&gt;&gt;&gt; quit</span><br><span class="line">Use quit() or Ctrl-Z plus Return to exit</span><br><span class="line">&gt;&gt;&gt; quit()</span><br><span class="line"></span><br><span class="line">(first) C:\Users\24659&gt;conda list</span><br><span class="line"># packages in environment at C:\Users\24659\.conda\envs\first:</span><br><span class="line">#</span><br><span class="line"># Name                    Version                   Build  Channel</span><br><span class="line">blas                      1.0                         mkl</span><br><span class="line">brotlipy                  0.7.0           py310he2412df_1004    conda-forge</span><br><span class="line">bzip2                     1.0.8                he774522_0</span><br><span class="line">ca-certificates           2022.12.7            h5b45459_0    conda-forge</span><br><span class="line">certifi                   2022.12.7          pyhd8ed1ab_0    conda-forge</span><br><span class="line">cffi                      1.15.1          py310h2bbff1b_3</span><br><span class="line">charset-normalizer        2.1.1              pyhd8ed1ab_0    conda-forge</span><br><span class="line">cryptography              37.0.4          py310ha857299_0    conda-forge</span><br><span class="line">cudatoolkit               11.6.0              hc0ea762_10    conda-forge</span><br><span class="line">flit-core                 3.6.0              pyhd3eb1b0_0</span><br><span class="line">freetype                  2.10.4               h546665d_1    conda-forge</span><br><span class="line">future                    0.18.3          py310haa95532_0</span><br><span class="line">idna                      3.4                pyhd8ed1ab_0    conda-forge</span><br><span class="line">intel-openmp              2021.4.0          haa95532_3556</span><br><span class="line">jpeg                      9e                   h8ffe710_2    conda-forge</span><br><span class="line">libffi                    3.4.2                hd77b12b_6</span><br><span class="line">libpng                    1.6.37               h1d00b33_2    conda-forge</span><br><span class="line">libtiff                   4.2.0                h0c97f57_3    conda-forge</span><br><span class="line">libuv                     1.44.2               h2bbff1b_0</span><br><span class="line">libwebp                   1.2.4                h8ffe710_0    conda-forge</span><br><span class="line">libwebp-base              1.2.4                h8ffe710_0    conda-forge</span><br><span class="line">lz4-c                     1.9.3                h8ffe710_1    conda-forge</span><br><span class="line">mkl                       2021.4.0           haa95532_640</span><br><span class="line">mkl-service               2.4.0           py310h2bbff1b_0</span><br><span class="line">mkl_fft                   1.3.1           py310ha0764ea_0</span><br><span class="line">mkl_random                1.2.2           py310h4ed8f06_0</span><br><span class="line">ninja                     1.10.2               haa95532_5</span><br><span class="line">ninja-base                1.10.2               h6d14046_5</span><br><span class="line">numpy                     1.23.5          py310h60c9a35_0</span><br><span class="line">numpy-base                1.23.5          py310h04254f7_0</span><br><span class="line">openssl                   1.1.1t               h2bbff1b_0</span><br><span class="line">pillow                    9.4.0           py310hd77b12b_0</span><br><span class="line">pip                       23.0.1          py310haa95532_0</span><br><span class="line">pycparser                 2.21               pyhd3eb1b0_0</span><br><span class="line">pyopenssl                 22.0.0             pyhd8ed1ab_1    conda-forge</span><br><span class="line">pysocks                   1.7.1              pyh0701188_6    conda-forge</span><br><span class="line">python                    3.10.9               h966fe2a_2</span><br><span class="line">python_abi                3.10                    2_cp310    conda-forge</span><br><span class="line">pytorch                   1.12.1          py3.10_cuda11.6_cudnn8_0    pytorch</span><br><span class="line">pytorch-mutex             1.0                        cuda    pytorch</span><br><span class="line">pyyaml                    6.0             py310h2bbff1b_1</span><br><span class="line">requests                  2.28.2             pyhd8ed1ab_0    conda-forge</span><br><span class="line">setuptools                65.6.3          py310haa95532_0</span><br><span class="line">six                       1.16.0             pyhd3eb1b0_1</span><br><span class="line">sqlite                    3.40.1               h2bbff1b_0</span><br><span class="line">tk                        8.6.12               h2bbff1b_0</span><br><span class="line">torchaudio                0.12.1              py310_cu116    pytorch</span><br><span class="line">torchvision               0.13.1              py310_cu116    pytorch</span><br><span class="line">typing-extensions         4.4.0           py310haa95532_0</span><br><span class="line">typing_extensions         4.4.0           py310haa95532_0</span><br><span class="line">tzdata                    2022g                h04d1e81_0</span><br><span class="line">urllib3                   1.26.14            pyhd8ed1ab_0    conda-forge</span><br><span class="line">vc                        14.2                 h21ff451_1</span><br><span class="line">vs2015_runtime            14.27.29016          h5e58377_2</span><br><span class="line">wheel                     0.38.4          py310haa95532_0</span><br><span class="line">win_inet_pton             1.1.0              pyhd8ed1ab_6    conda-forge</span><br><span class="line">wincertstore              0.2             py310haa95532_2</span><br><span class="line">xz                        5.2.10               h8cc25b3_1</span><br><span class="line">yaml                      0.2.5                he774522_0</span><br><span class="line">zlib                      1.2.13               h8cc25b3_0</span><br><span class="line">zstd                      1.5.0                h6255e5f_0    conda-forge</span><br><span class="line"></span><br><span class="line">(first) C:\Users\24659&gt;</span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2023/03/24/Hexo%E6%8C%87%E4%BB%A4/" rel="prev" title="Hexo指令">
+      <i class="fa fa-chevron-left"></i> Hexo指令
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2023/03/24/%E8%A7%A3%E5%86%B3%E8%AD%A6%E5%91%8A%E6%BF%80%E6%B4%BB%E9%97%AE%E9%A2%98/" rel="next" title="解决警告激活问题">
+      解决警告激活问题 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%A7%A3%E5%86%B31"><span class="nav-number">1.</span> <span class="nav-text">解决1</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%A7%A3%E5%86%B32"><span class="nav-number">2.</span> <span class="nav-text">解决2</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="夤夜"
+      src="https://cdn.jsdelivr.net/gh/QIAN-MIAN/Typora_image/Typora_img/202303192347914.png">
+  <p class="site-author-name" itemprop="name">夤夜</p>
+  <div class="site-description" itemprop="description">孰能浊以静之徐清。孰能安以动之徐生。保此道者，不欲盈。夫唯不盈，故能蔽而新成。</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">8</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">夤夜</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">2k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">9 分钟</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
